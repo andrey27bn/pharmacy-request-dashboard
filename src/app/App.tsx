@@ -257,13 +257,29 @@ export default function App() {
 						<Menu>
 							<MenuButton
 								as={Button}
-								variant='ghost'
-								rightIcon={<ChevronDownIcon boxSize={6} />}
-								fontWeight='700'
-								fontSize='20px'
-								color='black'
-								_hover={{ color: 'gray.600' }}
+								variant='unstyled'
 								display={{ base: 'flex', md: 'none' }}
+								alignItems='center'
+								gap='2px'
+								height='auto'
+								minW='auto'
+								// Стили текста
+								color='#1C1C1C'
+								fontFamily='Inter, sans-serif'
+								fontSize='20px'
+								fontWeight='600'
+								lineHeight='24px'
+								letterSpacing='-0.2px'
+								// Состояния
+								_hover={{ color: 'gray.600' }}
+								_active={{ bg: 'transparent' }}
+								// Иконка
+								rightIcon={
+									<ChevronDownIcon
+										w='24px'
+										h='24px'
+									/>
+								}
 							>
 								Заявки
 							</MenuButton>
@@ -334,6 +350,7 @@ export default function App() {
 						gap={3}
 						align={{ base: 'stretch', md: 'center' }}
 						justify='space-between'
+						display={{ base: 'none', md: 'flex' }}
 					>
 						<InputGroup maxW={{ base: 'full', md: '1472px' }} flex={1}>
 							<InputLeftElement pointerEvents='none'>
@@ -348,33 +365,53 @@ export default function App() {
 								onChange={e => setSearchQuery(e.target.value)}
 								bg='white'
 								_hover={{ borderColor: 'gray.300' }}
-								display={{ base: 'none', md: 'flex' }}
 							/>
 						</InputGroup>
 
 						<HStack gap={2}>
 							<Button
 								variant='outline'
-								leftIcon={<MdOutlinePictureAsPdf size={20} color='#718096' />}
+								leftIcon={<MdOutlinePictureAsPdf size={17} color='#1C1C1C' />}
+								w='112px'
 								h='40px'
 								bg='custom.bgLight'
 								borderColor='gray.200'
-								color='gray.800'
-								fontWeight='normal'
+								// Стили текста
+								color='#1C1C1C'
+								fontFamily='Inter, sans-serif'
+								fontSize='16px'
+								fontWeight='400'
+								lineHeight='24px'
+								textAlign='center'
 								_hover={{ bg: 'gray.100' }}
-								display={{ base: 'none', md: 'flex' }}
 							>
 								Экспорт
 							</Button>
 							<Button
-								leftIcon={<AddIcon />}
-								bg='custom.bgDark'
-								color='white'
 								onClick={onOpen}
-								size={{ base: 'md', md: 'md' }}
+								// Размеры и позиционирование
+								w={{ base: 'full', md: '230px' }}
+								h='40px'
+								display='flex'
+								padding='8px 17px'
+								justifyContent='center'
+								alignItems='center'
+								gap='10px'
+								// Фон и границы
+								bg='#1C1C1C'
+								borderRadius='4px'
 								_hover={{ bg: 'gray.700' }}
-								w={{ base: 'full', md: 'auto' }}
-								display={{ base: 'none', md: 'flex' }}
+								// Стили текста
+								color='#F1F1F1'
+								fontFamily='Inter, sans-serif'
+								fontSize='16px'
+								fontWeight='400'
+								lineHeight='24px'
+								textAlign='center'
+								// Иконка
+								leftIcon={
+									<AddIcon w='14px' h='14px' flexShrink={0} color='#F1F1F1' />
+								}
 							>
 								Создать новую заявку
 							</Button>
@@ -388,7 +425,7 @@ export default function App() {
 						borderColor='custom.tableBorder'
 						pb={5}
 					>
-						<Flex align='center' gap={6}>
+						<Flex align='center' gap={{ base: 2, xl: 6 }}>
 							<Button
 								display={{ base: 'flex', xl: 'none' }}
 								onClick={() => setShowMyRequests(prev => !prev)}
@@ -513,34 +550,64 @@ export default function App() {
 
 			{/* Мобильная FAB-кнопка */}
 			{isMobile && (
-				<Box position='fixed' bottom={6} right={6} zIndex={10}>
-					<VStack spacing={3} align='end'>
-						<InputGroup maxW={{ base: '130px' }} flex={1}>
-							<InputLeftElement pointerEvents='none'>
-								<SearchIcon color='black' />
+				<Box position='fixed' bottom={6} right={4} zIndex={10}>
+					<VStack spacing={2} align='end'>
+						<InputGroup maxW={{ base: '104px' }} flex={1}>
+							<InputLeftElement pointerEvents='none' height='full' width='43px'>
+								<SearchIcon color='#1C1C1C' boxSize='24px' />
 							</InputLeftElement>
+
 							<Input
 								placeholder='Поиск'
 								value={searchQuery}
 								onChange={e => setSearchQuery(e.target.value)}
-								bg='white'
-								border='1px solid black'
-								color='black'
-								_placeholder={{ color: 'black' }}
-								_hover={{ borderColor: 'black' }}
+								bg='#FFF'
+								border='2px solid #1C1C1C'
+								borderRadius='4px'
+								color='#1C1C1C'
+								fontFamily="'Inter', sans-serif"
+								fontSize='16px'
+								fontWeight='500'
+								lineHeight='24px'
+								h='40px'
+								py='8px'
+								px='12px'
+								pl='43px'
+								_placeholder={{
+									color: '#1C1C1C',
+									opacity: 1,
+									fontWeight: '500',
+								}}
+								_hover={{ borderColor: '#1C1C1C' }}
+								_focus={{
+									borderColor: '#1C1C1C',
+									boxShadow: 'none',
+								}}
 							/>
 						</InputGroup>
 						<Button
-							leftIcon={<AddIcon />}
-							bg='custom.bgDark'
-							color='white'
+							// Иконка и её стили
+							leftIcon={<AddIcon boxSize='14px' color='#FFF' />}
 							onClick={onOpen}
-							size='lg'
-							borderRadius='5'
-							boxShadow='xl'
-							_hover={{ bg: 'gray.700', transform: 'scale(1.05)' }}
+							gap='7px'
+							// Размеры и отступы
+							py='8px'
+							px='12px'
+							h='auto'
+							borderRadius='4px'
+							// Цвета
+							bg='#1C1C1C'
+							color='#F1F1F1'
+							// Типографика
+							fontSize='16px'
+							fontWeight='400'
+							lineHeight='24px'
 							transition='all 0.2s'
-							px={8}
+							_hover={{
+								bg: '#2d2d2d',
+								transform: 'scale(1.02)',
+							}}
+							_active={{ bg: '#000' }}
 						>
 							Создать новую заявку
 						</Button>

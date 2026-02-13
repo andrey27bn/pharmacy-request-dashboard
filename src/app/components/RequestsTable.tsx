@@ -104,7 +104,6 @@ export default function RequestsTable({
 			overflow='hidden'
 			bg='white'
 			borderRadius='8px'
-			border='1px solid'
 			borderColor='gray.200'
 		>
 			<Box overflowX='auto'>
@@ -114,21 +113,41 @@ export default function RequestsTable({
 							{Object.keys(sortableFields).map(title => (
 								<Th
 									key={title}
-									px={3}
+									// Стили текста
+									color='#1C1C1C'
+									fontFamily="'Inter', sans-serif"
+									fontSize='14px'
+									fontWeight='400'
+									lineHeight='24px'
+									textTransform='none'
+									letterSpacing='normal'
+									// Стили ячейки и границы
+									p={0}
+									borderBottom='1px solid #D9E1EC'
 									cursor={onSort ? 'pointer' : 'default'}
 									onClick={() => onSort?.(sortableFields[title])}
 									userSelect='none'
 								>
-									<Flex align='center' justify='space-between'>
+									<Flex
+										// Стили контейнера
+										px='10px'
+										py='8px'
+										justify='space-between'
+										align='center'
+									>
 										<Flex align='center' gap={1}>
-											<Text>{title}</Text>
+											<Text as='span'>{title}</Text>
 											<SortIcon field={title} />
 										</Flex>
 
 										<Icon
 											as={LuFilter}
-											boxSize={4}
-											color='gray.500'
+											w='12px'
+											h='12px'
+											flexShrink={0}
+											aspectRatio='1/1'
+											color='#1C1C1C'
+											opacity={0.3}
 											cursor='pointer'
 											onClick={e => {
 												e.stopPropagation()
@@ -186,8 +205,10 @@ export default function RequestsTable({
 										bg={statusBgColors[request.status]}
 										px={3}
 										py={1}
-										borderRadius='full'
+										borderRadius='4px'
 										textTransform='none'
+										fontWeight='400'
+										fontSize='sm'
 									>
 										{statusLabels[request.status]}
 									</Badge>
