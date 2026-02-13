@@ -1,9 +1,4 @@
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
-
-const config: ThemeConfig = {
-	initialColorMode: 'system',
-	useSystemColorMode: false,
-}
+import { extendTheme } from '@chakra-ui/react'
 
 // Кастомные брейкпоинты, включая '2xl' для переключения таблица/карточки
 const breakpoints = {
@@ -16,7 +11,6 @@ const breakpoints = {
 
 const theme = extendTheme({
 	breakpoints,
-	config,
 	colors: {
 		brand: {
 			50: '#e6f0ff',

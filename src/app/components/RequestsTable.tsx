@@ -12,7 +12,7 @@ import {
 	HStack,
 	Icon,
 	SimpleGrid,
-	useMediaQuery,
+	useMediaQuery, 
 	useToast,
 	useTheme,
 } from '@chakra-ui/react'
