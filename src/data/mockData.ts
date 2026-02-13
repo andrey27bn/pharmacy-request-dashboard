@@ -1,0 +1,262 @@
+import { Request, Priority, Status } from '@/types'
+
+export const mockRequests: Request[] = [
+	{
+		id: '1',
+		number: 'КС-0002',
+		pharmacy: { id: '848', address: 'Геленджик, Островского 7' },
+		createdAt: '29.07.2025',
+		createdTime: '11:36:45',
+		priority: 'high',
+		title: 'Проблема кассы',
+		category: 'Касса',
+		technician: 'Федоровая Н.',
+		deadline: '02:04',
+		decision: '01:35:34',
+		status: 'new',
+	},
+	{
+		id: '2',
+		number: 'КП-0002',
+		pharmacy: {
+			id: '505',
+			address: 'Королев, Калинина 4',
+		},
+		createdAt: '20.08.2025',
+		createdTime: '11:36:45',
+		priority: 'high',
+		title: 'Не печатает принтер чеки гудят',
+		category: 'Холодильники',
+		technician: '',
+		deadline: '05:03',
+		decision: '02:30:17',
+		status: 'in_progress',
+	},
+	{
+		id: '3',
+		number: 'КН-0002',
+		pharmacy: {
+			id: '845',
+			address: 'Тимашевск, Интерцех 36',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '21:35:45',
+		priority: 'low',
+		title: 'Кондисат на внутренней боли',
+		category: 'Кондиционеры',
+		technician: 'Максимов П.',
+		deadline: '05:05',
+		decision: '02:30:17',
+		status: 'ready',
+	},
+	{
+		id: '4',
+		number: 'ИЗ-0002',
+		pharmacy: {
+			id: '164',
+			address: 'Рдд, Сельмаш 92',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '21:35:45',
+		priority: 'critical',
+		title: 'Нужно поменять гигрометр',
+		category: 'Изм. оборуд.',
+		technician: 'Алексеев М.',
+		deadline: '05:05',
+		decision: '02:30:17',
+		status: 'ready',
+	},
+	{
+		id: '5',
+		number: 'ПЛ-0002',
+		pharmacy: {
+			id: '190',
+			address: 'Геленджик, Думитоса 24',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '11:36:45',
+		priority: 'high',
+		title: 'Залипает крыс у вода',
+		category: 'Помещения',
+		technician: 'Сидоров Б.',
+		deadline: '05:05',
+		decision: '02:30:17',
+		status: 'closed',
+	},
+	{
+		id: '6',
+		number: 'ИТ-0002',
+		pharmacy: {
+			id: '267',
+			address: 'Анапа, Парковая 67/с2',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '21:35:45',
+		priority: 'medium',
+		title: 'Нужен новый компьютер',
+		category: 'ИТ',
+		technician: 'Китов Я.',
+		deadline: '05:05',
+		decision: '02:30:17',
+		status: 'closed',
+	},
+	{
+		id: '7',
+		number: 'СА-0002',
+		pharmacy: {
+			id: '160',
+			address: 'Королевск, Красная 108',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '21:35:45',
+		priority: 'medium',
+		title: 'Уведа пересела сливать',
+		category: 'Сантехника',
+		technician: 'Малахов Н.',
+		deadline: '05:05',
+		decision: '02:30:17',
+		status: 'ready',
+	},
+	{
+		id: '8',
+		number: 'КТ-0002',
+		pharmacy: {
+			id: '495',
+			address: 'Геленджик, Островского 7',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '12:35:17',
+		priority: 'medium',
+		title: 'Сломался кассовый терминал',
+		category: 'Касса',
+		technician: '',
+		deadline: '02:30',
+		decision: '',
+		status: 'new',
+	},
+	{
+		id: '9',
+		number: 'ИТ-0003',
+		pharmacy: {
+			id: '347',
+			address: 'Сочи, Ленина 12',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '14:20:30',
+		priority: 'low',
+		title: 'Проблемы с интернетом',
+		category: 'ИТ',
+		technician: 'Петров А.',
+		deadline: '03:15',
+		decision: '01:45:12',
+		status: 'in_progress',
+	},
+	{
+		id: '10',
+		number: 'ЗЛ-0004',
+		pharmacy: {
+			id: '578',
+			address: 'Краснодар, Трудовая 5',
+		},
+		createdAt: '20.07.2025',
+		createdTime: '09:15:22',
+		priority: 'high',
+		title: 'Искрит розетка',
+		category: 'Помещения',
+		technician: 'Иванов С.',
+		deadline: '01:45',
+		decision: '00:30:45',
+		status: 'closed',
+	},
+	{
+		id: '11',
+		number: 'ИТ-0004',
+		pharmacy: {
+			id: '621',
+			address: 'Краснодар, Трудовая 5',
+		},
+		createdAt: '19.07.2025',
+		createdTime: '16:40:15',
+		priority: 'medium',
+		title: 'Не работает принтер',
+		category: 'ИТ',
+		technician: '',
+		deadline: '01:45',
+		decision: '',
+		status: 'under_review',
+	},
+]
+
+export const pharmacies = [
+	{ id: '848', address: 'Геленджик, Островского 7' },
+	{ id: '505', address: 'Королев, Калинина 4' },
+	{ id: '845', address: 'Тимашевск, Интерцех 36' },
+	{ id: '164', address: 'Рдд, Сельмаш 92' },
+	{ id: '190', address: 'Геленджик, Думитоса 24' },
+	{ id: '267', address: 'Анапа, Парковая 67/с2' },
+	{ id: '160', address: 'Королевск, Красная 108' },
+]
+
+export const categories = [
+	'Холодильники',
+	'Кондиционеры',
+	'Касса',
+	'ИТ',
+	'Сантехника',
+	'Изм. оборуд.',
+	'Помещения',
+]
+
+export const priorities: {
+	value: Priority
+	label: string
+	description: string
+	color: string
+}[] = [
+	{
+		value: 'critical',
+		label: 'Критический',
+		description: 'работа полностью остановлена',
+		color: '#B93C3C',
+	},
+	{
+		value: 'high',
+		label: 'Высокий',
+		description: 'критично, работа остановлена',
+		color: '#B93C3C',
+	},
+	{
+		value: 'medium',
+		label: 'Средний',
+		description: 'влияет на эффективность, но не стопорит',
+		color: '#CC892A',
+	},
+	{
+		value: 'low',
+		label: 'Низкий',
+		description: 'незначительное неудобство',
+		color: '#2D60ED',
+	},
+]
+
+export const statusLabels: Record<Status, string> = {
+	new: 'Новая',
+	declined: 'Отклонен',
+	under_review: 'На рассмотрении',
+	in_progress: 'В работе',
+	awaiting_parts: 'Ожидает запчасти',
+	ready: 'Готово',
+	closed: 'Закрыто',
+}
+
+//  КАСТОМНЫЕ ЦВЕТА ФОНА И ТЕКСТА
+export const statusBgColors: Record<Status, string> = {
+	new: '#F0CDFA',
+	declined: '#FEEBCB',
+	under_review: '#FEFCBF',
+	in_progress: '#FFEBB3',
+	awaiting_parts: '#E9D8FD',
+	ready: '#A2E3A4',
+	closed: '#F1F1F1',
+}
+
