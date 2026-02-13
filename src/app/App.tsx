@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react'
 import { SearchIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { LuLogOut, LuFilter } from 'react-icons/lu'
-import { Request, Status } from '@/types'
+import { Request, Status, Priority } from '@/types'
 import { mockRequests } from '@/data/mockData'
 import RequestsTable from './components/RequestsTable'
 import RequestGridCard from './components/RequestGridCard'
@@ -42,6 +42,25 @@ const formatDate = (date: Date): string => {
 	return `${day}.${month}.${year}`
 }
 
+// Приоритеты в логическом порядке (critical → low)
+const priorityRank: Record<Priority, number> = {
+	critical: 0,
+	high: 1,
+	medium: 2,
+	low: 3,
+}
+
+// Статусы в логическом порядке (new → closed)
+const statusRank: Record<Status, number> = {
+	new: 0,
+	declined: 1,
+	under_review: 2,
+	in_progress: 3,
+	awaiting_parts: 4,
+	ready: 5,
+	closed: 6,
+}
+
 export default function App() {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [requests, setRequests] = useState<Request[]>(mockRequests)
@@ -52,10 +71,6 @@ export default function App() {
 	const [showMyRequests, setShowMyRequests] = useState(false)
 
 	const isMobile = useBreakpointValue({ base: true, md: false })
-
-	const [yesterday] = useState(() =>
-		formatDate(new Date(Date.now() - 86400000)),
-	)
 
 	// Фильтрация и сортировка
 	const filteredRequests = useMemo(() => {
@@ -86,6 +101,20 @@ export default function App() {
 					aVal = a.pharmacy.address
 					bVal = b.pharmacy.address
 				}
+
+				// Кастомная сортировка для приоритета
+				if (sortField === 'priority') {
+					const order = sortDirection === 'asc' ? 1 : -1
+					return (priorityRank[a.priority] - priorityRank[b.priority]) * order
+				}
+
+				// Кастомная сортировка для статуса
+				if (sortField === 'status') {
+					const order = sortDirection === 'asc' ? 1 : -1
+					return (statusRank[a.status] - statusRank[b.status]) * order
+				}
+
+				// Обычная сортировка для остальных полей
 				if (typeof aVal === 'string') {
 					return sortDirection === 'asc'
 						? aVal.localeCompare(bVal)
@@ -130,13 +159,13 @@ export default function App() {
 	const groupedRequests = useMemo(() => {
 		const groups: Record<string, Request[]> = {}
 		const today = formatDate(new Date())
-		const yesterdayValue = yesterday
+		const yesterday = formatDate(new Date(Date.now() - 86400000))
 
 		filteredRequests.forEach(req => {
 			const date = req.createdAt
 			let groupKey = date
 			if (date === today) groupKey = 'СЕГОДНЯ'
-			else if (date === yesterdayValue) groupKey = 'ВЧЕРА'
+			else if (date === yesterday) groupKey = 'ВЧЕРА'
 			if (!groups[groupKey]) groups[groupKey] = []
 			groups[groupKey].push(req)
 		})
@@ -153,7 +182,7 @@ export default function App() {
 			return parseDate(b) - parseDate(a)
 		})
 		return { groups, sortedKeys }
-	}, [filteredRequests, yesterday])
+	}, [filteredRequests])
 
 	const statusTabs: { value: TabValue; label: string }[] = [
 		{ value: 'new', label: 'Новые' },
@@ -360,7 +389,6 @@ export default function App() {
 						pb={5}
 					>
 						<Flex align='center' gap={6}>
-							{/* Кнопка-иконка (только < xl) */}
 							<Button
 								display={{ base: 'flex', xl: 'none' }}
 								onClick={() => setShowMyRequests(prev => !prev)}
@@ -378,15 +406,14 @@ export default function App() {
 								sx={{ '& .chakra-button__icon': { m: 0 } }}
 							/>
 
-							{/* Табы */}
 							<HStack
 								gap={2}
 								overflowX='auto'
 								py={1}
 								css={{
 									'&::-webkit-scrollbar': { display: 'none' },
-									'-ms-overflow-style': 'none',
-									'scrollbar-width': 'none',
+									msOverflowStyle: 'none',
+									scrollbarWidth: 'none',
 								}}
 							>
 								{visibleTabs.map(tab => {
@@ -414,7 +441,6 @@ export default function App() {
 								})}
 							</HStack>
 
-							{/* Divider (только xl+) */}
 							<Divider
 								orientation='vertical'
 								height='40px'
@@ -423,7 +449,6 @@ export default function App() {
 								display={{ base: 'none', xl: 'block' }}
 							/>
 
-							{/* Кнопка с текстом (только xl+) */}
 							<Button
 								display={{ base: 'none', xl: 'flex' }}
 								onClick={() => setShowMyRequests(prev => !prev)}

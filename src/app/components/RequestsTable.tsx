@@ -13,6 +13,8 @@ import {
 	Icon,
 	SimpleGrid,
 	useMediaQuery,
+	useToast,
+	useTheme,
 } from '@chakra-ui/react'
 import { Request } from '@/types'
 import { statusLabels, statusBgColors } from '@/data/mockData'
@@ -48,7 +50,11 @@ export default function RequestsTable({
 	sortField,
 	sortDirection,
 }: RequestsTableProps) {
-	const [isTableVisible] = useMediaQuery('(min-width: 1371px)')
+	const toast = useToast()
+	const theme = useTheme()
+	const [isTableVisible] = useMediaQuery(
+		`(min-width: ${theme.breakpoints['2xl']})`,
+	)
 	const [isMobile] = useMediaQuery('(max-width: 767px)')
 
 	const SortIcon = ({ field }: { field: string }) => {
@@ -81,7 +87,7 @@ export default function RequestsTable({
 		)
 	}
 
-	// Режим сетки (карточки) для экранов < 1371px
+	// Режим сетки (карточки) для экранов < 2xl (1371px)
 	if (!isTableVisible) {
 		return (
 			<SimpleGrid columns={isMobile ? 1 : 2} spacing={4}>
@@ -126,7 +132,13 @@ export default function RequestsTable({
 											cursor='pointer'
 											onClick={e => {
 												e.stopPropagation()
-												
+												toast({
+													title: 'Фильтр по столбцу',
+													description: 'Функция находится в разработке',
+													status: 'info',
+													duration: 2000,
+													isClosable: true,
+												})
 											}}
 										/>
 									</Flex>

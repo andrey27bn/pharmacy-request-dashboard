@@ -90,36 +90,39 @@ export default function CreateRequestModal({
 	currentUser,
 }: CreateRequestModalProps) {
 	const toast = useToast()
-	const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
 	const { register, handleSubmit, setValue, watch, reset } =
 		useForm<CreateRequestFormData>({
-			defaultValues: { priority: 'medium', isWarranty: false },
+			defaultValues: {
+				priority: 'medium',
+				isWarranty: false,
+				files: [], // единый источник истины
+			},
 		})
 
 	const watchedPriority = watch('priority') as Priority
+	const files = watch('files') || []
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
 			const newFiles = Array.from(e.target.files)
-			setUploadedFiles(prev => [...prev, ...newFiles])
-			setValue('files', [...uploadedFiles, ...newFiles])
+			const currentFiles = watch('files') || []
+			const updatedFiles = [...currentFiles, ...newFiles]
+			setValue('files', updatedFiles, { shouldDirty: true })
 			// Сброс input, чтобы можно было выбрать тот же файл повторно
 			e.target.value = ''
 		}
 	}
 
 	const removeFile = (index: number) => {
-		setUploadedFiles(prev => prev.filter((_, i) => i !== index))
-		setValue(
-			'files',
-			uploadedFiles.filter((_, i) => i !== index),
-		)
+		const currentFiles = watch('files') || []
+		const updatedFiles = currentFiles.filter((_, i) => i !== index)
+		setValue('files', updatedFiles, { shouldDirty: true })
 	}
 
 	const onSubmit = (data: CreateRequestFormData) => {
-		//  Вывод в консоль по ТЗ
+		// Вывод в консоль по ТЗ
 		console.log('Создана заявка:', data)
 
 		const now = new Date()
@@ -159,7 +162,6 @@ export default function CreateRequestModal({
 		toast({ title: 'Заявка создана', status: 'success', duration: 3000 })
 		onClose()
 		reset()
-		setUploadedFiles([])
 		if (fileInputRef.current) fileInputRef.current.value = ''
 	}
 
@@ -397,9 +399,9 @@ export default function CreateRequestModal({
 										</VStack>
 									</Box>
 									{/* Отображение загруженных файлов */}
-									{uploadedFiles.length > 0 && (
+									{files.length > 0 && (
 										<Wrap mt={3} spacing={2}>
-											{uploadedFiles.map((file, idx) => (
+											{files.map((file, idx) => (
 												<WrapItem key={idx}>
 													<Tag
 														size='md'
