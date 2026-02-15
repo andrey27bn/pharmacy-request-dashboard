@@ -160,6 +160,16 @@ export default function CreateRequestModal({
 
 			const currentFiles = getValues('files') || []
 			const updatedFiles = [...currentFiles, ...newFiles]
+			if (updatedFiles.length > 10) {
+				// Добавляем лимит 10 файлов
+				toast({
+					title: 'Слишком много файлов',
+					description: 'Максимум 10 файлов',
+					status: 'error',
+					duration: 3000,
+				})
+				return
+			}
 			setValue('files', updatedFiles, { shouldDirty: true })
 			e.target.value = ''
 		}
@@ -227,7 +237,7 @@ export default function CreateRequestModal({
 				/>
 				<VStack align='start' spacing={0} overflow='hidden'>
 					<Text
-						color='#1C1C1C'
+						color='custom.bgDark'
 						fontFamily='Inter, sans-serif'
 						fontSize='12px'
 						fontWeight='400'
@@ -297,7 +307,7 @@ export default function CreateRequestModal({
 									render={({ field }) => (
 										<FormControl isInvalid={!!errors.pharmacy}>
 											<FormLabel
-												color='#1C1C1C'
+												color='custom.bgDark'
 												fontFamily="'Inter', sans-serif"
 												fontSize='12px'
 												fontWeight='400'
@@ -311,7 +321,7 @@ export default function CreateRequestModal({
 												<MenuButton
 													as={Button}
 													w='100%'
-													h={{ base: '42px', md: '48px' }} 
+													h={{ base: '42px', md: '48px' }}
 													bg='#FEFEFE'
 													borderRadius='8px'
 													border='1px solid'
@@ -341,7 +351,7 @@ export default function CreateRequestModal({
 														overflow='hidden'
 														textOverflow='ellipsis'
 														whiteSpace='nowrap'
-														paddingRight='20px' 
+														paddingRight='20px'
 													>
 														{field.value
 															? pharmacies.find(p => p.id === field.value)
@@ -351,9 +361,9 @@ export default function CreateRequestModal({
 												</MenuButton>
 
 												<MenuList
-													minW='0' 
+													minW='0'
 													zIndex={10}
-													maxH='300px' 
+													maxH='300px'
 													overflowY='auto'
 													bg='#FEFEFE'
 													borderRadius='8px'
@@ -367,7 +377,7 @@ export default function CreateRequestModal({
 															color='#1C1C1C'
 															py='10px'
 															_hover={{ bg: 'gray.50' }}
-															whiteSpace='normal' 
+															whiteSpace='normal'
 														>
 															{p.id} - {p.address}
 														</MenuItem>
@@ -391,7 +401,7 @@ export default function CreateRequestModal({
 									render={({ field }) => (
 										<FormControl isInvalid={!!errors.category}>
 											<FormLabel
-												color='#1C1C1C'
+												color='custom.bgDark'
 												fontSize='12px'
 												fontWeight='400'
 												mb='6px'
@@ -417,7 +427,6 @@ export default function CreateRequestModal({
 													rightIcon={<ChevronDownIcon color='#1C1C1C' />}
 													_hover={{ borderColor: '#B0B0B0' }}
 													_active={{ bg: '#FEFEFE' }}
-													
 												>
 													<Box
 														as='span'
@@ -426,7 +435,7 @@ export default function CreateRequestModal({
 														overflow='hidden'
 														textOverflow='ellipsis'
 														whiteSpace='nowrap'
-														paddingRight='20px' 
+														paddingRight='20px'
 													>
 														{field.value ||
 															'Холодильники, кондиционеры или другое'}
@@ -492,7 +501,7 @@ export default function CreateRequestModal({
 												}}
 											>
 												<Text
-													color='#1C1C1C'
+													color='custom.bgDark'
 													fontFamily="'Inter', sans-serif"
 													fontSize='14px'
 													fontStyle='normal'
@@ -513,7 +522,7 @@ export default function CreateRequestModal({
 								<FormControl isInvalid={!!errors.title}>
 									<FormLabel
 										alignSelf='stretch'
-										color='#1C1C1C'
+										color='custom.bgDark'
 										fontFamily="'Inter', sans-serif"
 										fontSize='12px'
 										fontWeight='400'
@@ -563,7 +572,7 @@ export default function CreateRequestModal({
 								<FormControl>
 									<FormLabel
 										alignSelf='stretch'
-										color='#1C1C1C'
+										color='custom.bgDark'
 										fontFamily="'Inter', sans-serif"
 										fontSize='12px'
 										fontWeight='400'
@@ -618,7 +627,7 @@ export default function CreateRequestModal({
 								<FormControl>
 									<FormLabel
 										alignSelf='stretch'
-										color='#1C1C1C'
+										color='custom.bgDark'
 										fontFamily="'Inter', sans-serif"
 										fontSize='12px'
 										fontWeight='400'
@@ -668,13 +677,13 @@ export default function CreateRequestModal({
 										mr={0}
 										onClick={e => {
 											if (window.innerWidth < 768) {
-												e.preventDefault() 
+												e.preventDefault()
 												fileInputRef.current?.click()
 											}
 										}}
 										display={{ base: 'flex', md: 'block' }}
 										h={{ base: '50px', md: 'auto' }}
-										bg={{ base: '#F1F1F1', md: 'transparent' }}
+										bg={{ base: 'custom.bgLight', md: 'transparent' }}
 										p={{ base: '8px 20px', md: '0' }}
 										borderRadius={{ base: '4px', md: '0' }}
 										border={{ base: 'none', md: 'none' }}
@@ -682,7 +691,7 @@ export default function CreateRequestModal({
 										alignItems='center'
 										gap='12px'
 										cursor='pointer'
-										color='#1C1C1C'
+										color='custom.bgDark'
 										fontFamily="'Inter', sans-serif"
 										fontSize={{ base: '16px', md: '12px' }}
 										fontWeight={{ base: '500', md: '400' }}
@@ -741,7 +750,7 @@ export default function CreateRequestModal({
 
 										<VStack spacing='10px'>
 											<Text
-												color='#1C1C1C'
+												color='custom.bgDark'
 												fontFamily="'Inter', sans-serif"
 												fontSize='14px'
 												fontWeight='300'
@@ -754,7 +763,7 @@ export default function CreateRequestModal({
 												size={24}
 												style={{
 													strokeWidth: '1.5px',
-													stroke: '#1C1C1C',
+													stroke: 'custom.bgDark',
 												}}
 											/>
 										</VStack>
@@ -769,7 +778,7 @@ export default function CreateRequestModal({
 														borderRadius='full'
 														variant='subtle'
 														bg='#E2E8F0'
-														color='#1C1C1C'
+														color='custom.bgDark'
 													>
 														<TagLabel fontSize='12px'>{file.name}</TagLabel>
 														<TagCloseButton

@@ -31,7 +31,7 @@ interface RequestsTableProps {
 }
 
 // Маппинг заголовков на поля сортировки
-const sortableFields: Record<string, string> = {
+const sortableFields: Record<string, keyof Request> = {
 	'№': 'number',
 	Аптека: 'pharmacy',
 	Создана: 'createdAt',
@@ -100,21 +100,17 @@ export default function RequestsTable({
 
 	// Режим таблицы для широких экранов
 	return (
-		<Box
-			overflow='hidden'
-			bg='white'
-			borderRadius='8px'
-			borderColor='gray.200'
-		>
+		<Box overflow='hidden' bg='white' borderRadius='8px' borderColor='gray.200'>
 			<Box overflowX='auto'>
-				<Table variant='simple' size='sm'>
+				<Table variant='simple' size='sm' aria-label='Таблица заявок'>
 					<Thead>
-						<Tr bg='#F1F1F1' h='40px'>
+						<Tr bg='custom.bgLight' h='40px'>
 							{Object.keys(sortableFields).map(title => (
 								<Th
 									key={title}
+									scope='col'
 									// Стили текста
-									color='#1C1C1C'
+									color='custom.bgDark'
 									fontFamily="'Inter', sans-serif"
 									fontSize='14px'
 									fontWeight='400'
@@ -146,7 +142,7 @@ export default function RequestsTable({
 											h='12px'
 											flexShrink={0}
 											aspectRatio='1/1'
-											color='#1C1C1C'
+											color='custom.bgDark'
 											opacity={0.3}
 											cursor='pointer'
 											onClick={e => {

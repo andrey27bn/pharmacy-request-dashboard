@@ -1,14 +1,16 @@
+import React from 'react'
 import { Box, VStack, HStack, Text, Badge, Flex, Icon } from '@chakra-ui/react'
 import { Request } from '@/types'
 import { statusLabels, statusBgColors } from '@/data/mockData'
 import PriorityIndicator from './PriorityIndicator'
 import { GoCheckCircle } from 'react-icons/go'
 
+
 interface RequestGridCardProps {
 	request: Request
 }
 
-export default function RequestGridCard({ request }: RequestGridCardProps) {
+export default React.memo(function RequestGridCard({ request }: RequestGridCardProps) {
 	return (
 		<Box
 			bg='white'
@@ -81,4 +83,4 @@ export default function RequestGridCard({ request }: RequestGridCardProps) {
 			</VStack>
 		</Box>
 	)
-}
+})

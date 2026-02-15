@@ -28,7 +28,7 @@ import { mockRequests } from '@/data/mockData'
 import RequestsTable from './components/RequestsTable'
 import RequestGridCard from './components/RequestGridCard'
 import CreateRequestModal from './components/CreateRequestModal'
-import imgEllipse128 from '../assets/author.png'
+import authorAvatar from '../assets/author.png'
 import { MdOutlinePictureAsPdf } from 'react-icons/md'
 
 type TabValue = 'all' | Status
@@ -98,8 +98,8 @@ export default function App() {
 				let bVal: any = b[sortField as keyof Request]
 
 				if (sortField === 'pharmacy') {
-					aVal = a.pharmacy.address
-					bVal = b.pharmacy.address
+					aVal = a.pharmacy?.address ?? '' 
+					bVal = b.pharmacy?.address ?? ''
 				}
 
 				// Кастомная сортировка для приоритета
@@ -274,12 +274,7 @@ export default function App() {
 								_hover={{ color: 'gray.600' }}
 								_active={{ bg: 'transparent' }}
 								// Иконка
-								rightIcon={
-									<ChevronDownIcon
-										w='24px'
-										h='24px'
-									/>
-								}
+								rightIcon={<ChevronDownIcon w='24px' h='24px' />}
 							>
 								Заявки
 							</MenuButton>
@@ -292,7 +287,7 @@ export default function App() {
 
 						<HStack gap={6}>
 							<Box position='relative' display={{ base: 'none', md: 'block' }}>
-								<Avatar size='sm' src={imgEllipse128} />
+								<Avatar size='sm' src={authorAvatar} />
 								<Badge
 									position='absolute'
 									bottom='-5px'
@@ -323,7 +318,7 @@ export default function App() {
 								Выйти
 							</Button>
 							<Box position='relative' display={{ base: 'block', md: 'none' }}>
-								<Avatar size='sm' src={imgEllipse128} />
+								<Avatar size='sm' src={authorAvatar} />
 								<Badge
 									position='absolute'
 									top='-4px'
@@ -402,7 +397,7 @@ export default function App() {
 								borderRadius='4px'
 								_hover={{ bg: 'gray.700' }}
 								// Стили текста
-								color='#F1F1F1'
+								color='custom.bgLight'
 								fontFamily='Inter, sans-serif'
 								fontSize='16px'
 								fontWeight='400'
@@ -554,17 +549,17 @@ export default function App() {
 					<VStack spacing={2} align='end'>
 						<InputGroup maxW={{ base: '104px' }} flex={1}>
 							<InputLeftElement pointerEvents='none' height='full' width='43px'>
-								<SearchIcon color='#1C1C1C' boxSize='24px' />
+								<SearchIcon color='custom.bgDark' boxSize='24px' />
 							</InputLeftElement>
 
 							<Input
 								placeholder='Поиск'
 								value={searchQuery}
 								onChange={e => setSearchQuery(e.target.value)}
-								bg='#FFF'
+								bg='custom.white'
 								border='2px solid #1C1C1C'
 								borderRadius='4px'
-								color='#1C1C1C'
+								color='custom.bgDark'
 								fontFamily="'Inter', sans-serif"
 								fontSize='16px'
 								fontWeight='500'
@@ -574,20 +569,20 @@ export default function App() {
 								px='12px'
 								pl='43px'
 								_placeholder={{
-									color: '#1C1C1C',
+									color: 'custom.bgDark',
 									opacity: 1,
 									fontWeight: '500',
 								}}
-								_hover={{ borderColor: '#1C1C1C' }}
+								_hover={{ borderColor: 'custom.bgDark' }}
 								_focus={{
-									borderColor: '#1C1C1C',
+									borderColor: 'custom.bgDark',
 									boxShadow: 'none',
 								}}
 							/>
 						</InputGroup>
 						<Button
 							// Иконка и её стили
-							leftIcon={<AddIcon boxSize='14px' color='#FFF' />}
+							leftIcon={<AddIcon boxSize='14px' color='custom.white' />}
 							onClick={onOpen}
 							gap='7px'
 							// Размеры и отступы
@@ -596,8 +591,8 @@ export default function App() {
 							h='auto'
 							borderRadius='4px'
 							// Цвета
-							bg='#1C1C1C'
-							color='#F1F1F1'
+							bg='custom.bgDark'
+							color='custom.bgLight'
 							// Типографика
 							fontSize='16px'
 							fontWeight='400'
